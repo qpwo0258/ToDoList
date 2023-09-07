@@ -40,6 +40,7 @@ app.post('/add_list', (req, res) => {
 });
 
 app.get('/delete_list/:id', (req, res) => {
+    console.log("진입");
     getConnection((conn) => {
         const deleteContent = req.params.id;
         console.log(deleteContent + '삭제');
