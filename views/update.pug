@@ -1,0 +1,11 @@
+html
+    head 
+        meta(charset='utf-8')
+        title= 'Update Page'
+    body 
+        h3
+            = prevContent
+        form(action='/update_list', method='post')
+            input(type='text' name='newContent')
+            input(type='hidden' name='prevContent' value=prevContent)
+            input(type='submit' value='수정하기')
