@@ -30,7 +30,7 @@ app.post('/add_list', (req, res) => {
     getConnection((conn) => {
         const newContent = req.body.content;
         console.log(newContent + " 추가");
-        conn.query(`insert into ToDoList(ToDo) values ("${newContent}")`, function (err, rows, fields) {
+        conn.query(`insert into ToDoList(ToDo) values ("?")`, [newContent], function (err, rows, fields) {
             if (err) {
                 console.error('errer connectiong: ' + err.stack);
             }
@@ -39,12 +39,11 @@ app.post('/add_list', (req, res) => {
     });
 });
 
-app.get('/delete_list/:id', (req, res) => {
-    console.log("진입");
+app.get('/delete_list/:id?', (req, res) => {
     getConnection((conn) => {
         const deleteContent = req.params.id;
         console.log(deleteContent + '삭제');
-        conn.query(`delete from ToDoList where ToDo="${deleteContent}"`, function (err, rows, fields) {
+        conn.query(`delete from ToDoList where ToDo="?"`, [deleteContent], function (err, rows, fields) {
             if (err) {
                 console.error('errer connectiong: ' + err.stack);
             }
@@ -61,7 +60,7 @@ app.post('/update_list', (req, res) => {
     getConnection((conn) => {
         let prevContent = req.body.prevContent;
         let newContent = req.body.newContent;
-        conn.query(`update ToDoList set ToDo="${newContent}" where ToDo="${prevContent}"`);
+        conn.query(`update ToDoList set ToDo="?" where ToDo="?"`, [newContent, prevContent]);
         console.log(prevContent + '을(를)' + newContent + '(으)로 수정');
         res.redirect('/');
     });
